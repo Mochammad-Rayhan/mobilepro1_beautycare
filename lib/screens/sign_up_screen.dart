@@ -35,10 +35,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       return;
     }
 
-    if (!_agreeToTerms) {
-      _showSnackBar('Please agree to Terms & Conditions');
-      return;
-    }
+
 
     setState(() {
       _isLoading = true;
@@ -202,7 +199,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ? const Center(child: CircularProgressIndicator(color: AppColors.primary))
                   : PrimaryButton(
                       text: 'Create Account',
-                      onPressed: _register,
+                      onPressed: _agreeToTerms ? _register : null,
                     ),
               const SizedBox(height: 32),
               
