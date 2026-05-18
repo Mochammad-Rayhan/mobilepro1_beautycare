@@ -2,7 +2,20 @@ import 'package:flutter/material.dart';
 import 'theme/app_theme.dart';
 import 'screens/sign_in_screen.dart';
 
-void main() {
+import 'package:beautycare/database/db_helper.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Ambil dan print semua user di console untuk melihat email dan password
+  final dbHelper = DBHelper();
+  final users = await dbHelper.getAllUsers();
+  print('=== DATA USER TERDAFTAR ===');
+  for (var user in users) {
+    print('Nama: ${user.name}, Email: ${user.email}, Password: ${user.password}');
+  }
+  print('===========================');
+
   runApp(const MyApp());
 }
 
