@@ -11,75 +11,178 @@ class ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: const Text('Profile'),
-        backgroundColor: AppColors.background,
-        foregroundColor: AppColors.textPrimary,
-        elevation: 0,
-        centerTitle: false,
-      ),
+      backgroundColor: AppColors.inputFill, // Slightly off-white background
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
         child: Column(
           children: [
-            Center(
-              child: Container(
-                width: 120,
-                height: 120,
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.1),
-                  shape: BoxShape.circle,
-                  border: Border.all(color: AppColors.primary, width: 2),
-                ),
-                child: const Icon(
-                  Icons.person,
-                  size: 60,
-                  color: AppColors.primary,
-                ),
-              ),
-            ),
+            _buildHeader(context),
             const SizedBox(height: 24),
-            Text(
-              user.name,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Column(
+                children: [
+                  _buildOptionsGroup(
+                    context,
+                    [
+                      _ProfileOptionData(
+                        icon: Icons.person_outline,
+                        title: 'Edit Profile',
+                        onTap: () {},
+                      ),
+                      _ProfileOptionData(
+                        icon: Icons.notifications_none_outlined,
+                        title: 'Notifications',
+                        onTap: () {},
+                      ),
+                      _ProfileOptionData(
+                        icon: Icons.settings_outlined,
+                        title: 'Settings',
+                        onTap: () {},
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  _buildOptionsGroup(
+                    context,
+                    [
+                      _ProfileOptionData(
+                        icon: Icons.help_outline,
+                        title: 'Help & Support',
+                        onTap: () {},
+                      ),
+                      _ProfileOptionData(
+                        icon: Icons.info_outline,
+                        title: 'About App',
+                        onTap: () {},
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  _buildOptionsGroup(
+                    context,
+                    [
+                      _ProfileOptionData(
+                        icon: Icons.logout_rounded,
+                        title: 'Logout',
+                        isDestructive: true,
+                        onTap: () => _showLogoutDialog(context),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 100), // Space for bottom nav
+                ],
               ),
             ),
-            const SizedBox(height: 8),
-            Text(
-              user.email,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: AppColors.textSecondary,
-              ),
-            ),
-            const SizedBox(height: 48),
-            _buildProfileOption(
-              context,
-              icon: Icons.settings_outlined,
-              title: 'Settings',
-              onTap: () {},
-            ),
-            _buildProfileOption(
-              context,
-              icon: Icons.help_outline,
-              title: 'Help & Support',
-              onTap: () {},
-            ),
-            const Divider(height: 40),
-            _buildProfileOption(
-              context,
-              icon: Icons.logout,
-              title: 'Logout',
-              isDestructive: true,
-              onTap: () {
-                _showLogoutDialog(context);
-              },
-            ),
-            const SizedBox(height: 100), // Space for bottom nav
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.only(top: 60, bottom: 30, left: 24, right: 24),
+      decoration: const BoxDecoration(
+        color: AppColors.primary,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(30),
+          bottomRight: Radius.circular(30),
+        ),
+      ),
+      child: Column(
+        children: [
+          const Text(
+            'Profile',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 24),
+          Container(
+            width: 100,
+            height: 100,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white, width: 4),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 10,
+                  offset: const Offset(0, 5),
+                ),
+              ],
+            ),
+            child: const Icon(
+              Icons.person,
+              size: 50,
+              color: AppColors.primary,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            user.name,
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            user.email,
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.white.withOpacity(0.8),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOptionsGroup(BuildContext context, List<_ProfileOptionData> options) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        children: options.asMap().entries.map((entry) {
+          final index = entry.key;
+          final option = entry.value;
+          final isLast = index == options.length - 1;
+
+          return Column(
+            children: [
+              _buildProfileOption(
+                context,
+                icon: option.icon,
+                title: option.title,
+                onTap: option.onTap,
+                isDestructive: option.isDestructive,
+              ),
+              if (!isLast)
+                const Divider(
+                  height: 1,
+                  thickness: 1,
+                  indent: 60,
+                  endIndent: 16,
+                  color: AppColors.inputFill,
+                ),
+            ],
+          );
+        }).toList(),
       ),
     );
   }
@@ -92,27 +195,50 @@ class ProfileTab extends StatelessWidget {
     bool isDestructive = false,
   }) {
     final color = isDestructive ? AppColors.error : AppColors.textPrimary;
-    return ListTile(
-      onTap: onTap,
-      leading: Container(
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(10),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: isDestructive
+                      ? AppColors.error.withOpacity(0.1)
+                      : AppColors.primary.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
+                  icon,
+                  color: isDestructive ? AppColors.error : AppColors.primary,
+                  size: 22,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: color,
+                  ),
+                ),
+              ),
+              if (!isDestructive)
+                const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 16,
+                  color: AppColors.textSecondary,
+                ),
+            ],
+          ),
         ),
-        child: Icon(icon, color: color),
       ),
-      title: Text(
-        title,
-        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-          color: color,
-          fontSize: 16,
-        ),
-      ),
-      trailing: isDestructive
-          ? null
-          : const Icon(Icons.arrow_forward_ios, size: 16, color: AppColors.border),
-      contentPadding: EdgeInsets.zero,
     );
   }
 
@@ -122,7 +248,7 @@ class ProfileTab extends StatelessWidget {
       builder: (BuildContext context) {
         return Dialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(24),
           ),
           elevation: 0,
           backgroundColor: Colors.transparent,
@@ -131,7 +257,7 @@ class ProfileTab extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(24),
               boxShadow: const [
                 BoxShadow(
                   color: Colors.black26,
@@ -159,8 +285,9 @@ class ProfileTab extends StatelessWidget {
                 const Text(
                   'Logout',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 22,
                     fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimary,
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -168,11 +295,11 @@ class ProfileTab extends StatelessWidget {
                   'Are you sure you want to logout from your account?',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black54,
+                    fontSize: 15,
+                    color: AppColors.textSecondary,
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 32),
                 Row(
                   children: [
                     Expanded(
@@ -180,9 +307,9 @@ class ProfileTab extends StatelessWidget {
                         style: OutlinedButton.styleFrom(
                           foregroundColor: AppColors.textPrimary,
                           side: const BorderSide(color: AppColors.border),
-                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                         ),
                         onPressed: () {
@@ -192,20 +319,20 @@ class ProfileTab extends StatelessWidget {
                           'Cancel',
                           style: TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: 16),
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.error,
                           foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                           elevation: 0,
                         ),
@@ -220,7 +347,7 @@ class ProfileTab extends StatelessWidget {
                           'Logout',
                           style: TextStyle(
                             fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
@@ -234,4 +361,18 @@ class ProfileTab extends StatelessWidget {
       },
     );
   }
+}
+
+class _ProfileOptionData {
+  final IconData icon;
+  final String title;
+  final VoidCallback onTap;
+  final bool isDestructive;
+
+  _ProfileOptionData({
+    required this.icon,
+    required this.title,
+    required this.onTap,
+    this.isDestructive = false,
+  });
 }

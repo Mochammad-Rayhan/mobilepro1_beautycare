@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../models/user_model.dart';
 import 'dashboard/home_tab.dart';
-import 'dashboard/beauty_ai_tab.dart';
+import 'beauty_ai_chat_screen.dart';
 import 'dashboard/history_tab.dart';
 import 'dashboard/profile_tab.dart';
 
@@ -26,7 +26,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.initState();
     _tabs = [
       HomeTab(userName: widget.user.name),
-      const BeautyAITab(),
+      BeautyAIChatScreen(user: widget.user),
       const HistoryTab(),
       ProfileTab(user: widget.user),
     ];
@@ -36,15 +36,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true, // Allows body to flow under the bottom navbar for glassmorphism
-      body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300),
-        transitionBuilder: (Widget child, Animation<double> animation) {
-          return FadeTransition(
-            opacity: animation,
-            child: child,
-          );
-        },
-        child: _tabs[_currentIndex],
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _tabs,
       ),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
