@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../models/user_model.dart';
 import 'dashboard/home_tab.dart';
-import 'beauty_ai_chat_screen.dart';
+import 'dashboard/beauty_ai_tab.dart';
 import 'dashboard/history_tab.dart';
 import 'dashboard/profile_tab.dart';
 
@@ -26,7 +26,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.initState();
     _tabs = [
       HomeTab(userName: widget.user.name),
-      BeautyAIChatScreen(user: widget.user),
+      BeautyAITab(user: widget.user),
       const HistoryTab(),
       ProfileTab(user: widget.user),
     ];
