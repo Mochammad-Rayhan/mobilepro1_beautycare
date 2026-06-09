@@ -5,6 +5,8 @@ import '../../models/home_models.dart';
 import '../../theme/app_colors.dart';
 import 'package:intl/intl.dart';
 
+import '../../screens/product_detail_screen.dart';
+
 class ProductCard extends StatelessWidget {
   final ProductModel product;
 
@@ -26,7 +28,16 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProductDetailScreen(product: product),
+          ),
+        );
+      },
+      child: Container(
       width: 158,
       margin: const EdgeInsets.only(right: 14),
       decoration: BoxDecoration(
@@ -148,7 +159,14 @@ class ProductCard extends StatelessWidget {
                   width: double.infinity,
                   height: 32,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProductDetailScreen(product: product),
+                        ),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
@@ -162,13 +180,14 @@ class ProductCard extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    child: const Text('Beli Sekarang'),
+                    child: const Text('Lihat Detail'),
                   ),
                 ),
               ],
             ),
           ),
         ],
+      ),
       ),
     );
   }

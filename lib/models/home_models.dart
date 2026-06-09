@@ -39,6 +39,7 @@ class ProductModel {
   final String price;
   final int buyers;
   final double rating;
+  final String? description;
 
   const ProductModel({
     required this.id,
@@ -48,6 +49,7 @@ class ProductModel {
     required this.price,
     required this.buyers,
     required this.rating,
+    this.description,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -59,6 +61,7 @@ class ProductModel {
       price: json['price'] ?? '',
       buyers: json['buyers'] ?? 0,
       rating: (json['rating'] ?? 0.0).toDouble(),
+      description: json['description'],
     );
   }
 }

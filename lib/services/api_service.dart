@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../../models/home_models.dart'; // Sesuaikan dengan path model Anda
 import '../../models/user_model.dart';
+
 class ApiService {
   // IP khusus Emulator Android ke localhost laptop Anda
-  static const String _baseUrl = 'http://10.0.2.2/beautycare-api/public/api';
+  static const String _baseUrl =
+      'http://192.168.43.63/beautycare-api/public/api';
 
   Future<HomeResponse> fetchHomeData() async {
     final url = Uri.parse('$_baseUrl/home-data');
@@ -42,15 +44,12 @@ class ApiService {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
-        body: json.encode({
-          'email': email,
-          'password': password,
-        }),
+        body: json.encode({'email': email, 'password': password}),
       );
 
       if (response.statusCode == 200) {
         final Map<String, dynamic> data = json.decode(response.body);
-        
+
         // Sesuaikan dengan struktur response Laravel Anda
         // Misalnya: { "success": true, "user": { "id": 1, "name": "...", "email": "..." }, "token": "..." }
         if (data['user'] != null) {
