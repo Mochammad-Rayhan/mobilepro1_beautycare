@@ -18,14 +18,14 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  
+
   bool _isLoading = false;
 
   void _login() async {
     if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
       _showErrorDialog(
-        'Data Tidak Lengkap', 
-        'Harap masukkan email dan password Anda untuk melanjutkan.'
+        'Data Tidak Lengkap',
+        'Harap masukkan email dan password Anda untuk melanjutkan.',
       );
       return;
     }
@@ -49,17 +49,15 @@ class _SignInScreenState extends State<SignInScreen> {
       if (mounted) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(
-            builder: (context) => DashboardScreen(user: user),
-          ),
+          MaterialPageRoute(builder: (context) => DashboardScreen(user: user)),
         );
       }
     } else {
       _emailController.clear();
       _passwordController.clear();
       _showErrorDialog(
-        'Login Gagal', 
-        'Email atau password yang Anda masukkan salah. Silakan coba lagi.'
+        'Login Gagal',
+        'Email atau password yang Anda masukkan salah. Silakan coba lagi.',
       );
     }
   }
@@ -116,10 +114,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   Text(
                     message,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.black54,
-                    ),
+                    style: const TextStyle(fontSize: 14, color: Colors.black54),
                   ),
                   const SizedBox(height: 24),
                   SizedBox(
@@ -175,9 +170,9 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: Text(
                   'Beautycare',
                   style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                        color: AppColors.primary,
-                        letterSpacing: -0.5,
-                      ),
+                    color: AppColors.primary,
+                    letterSpacing: -0.5,
+                  ),
                 ),
               ),
               const SizedBox(height: 48),
@@ -191,7 +186,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: 32),
-              
+
               CustomTextField(
                 hintText: 'Email address',
                 prefixIcon: Icons.email_outlined,
@@ -206,7 +201,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 controller: _passwordController,
               ),
               const SizedBox(height: 12),
-              
+
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
@@ -221,15 +216,16 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
               const SizedBox(height: 24),
-              
+
               _isLoading
-                  ? const Center(child: CircularProgressIndicator(color: AppColors.primary))
-                  : PrimaryButton(
-                      text: 'Sign In',
-                      onPressed: _login,
-                    ),
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        color: AppColors.primary,
+                      ),
+                    )
+                  : PrimaryButton(text: 'Sign In', onPressed: _login),
               const SizedBox(height: 32),
-              
+
               Row(
                 children: [
                   const Expanded(child: Divider(color: AppColors.border)),
@@ -237,19 +233,23 @@ class _SignInScreenState extends State<SignInScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
                       'or continue with',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontSize: 13,
-                          ),
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyMedium?.copyWith(fontSize: 13),
                     ),
                   ),
                   const Expanded(child: Divider(color: AppColors.border)),
                 ],
               ),
               const SizedBox(height: 32),
-              
+
               SocialLoginButton(
                 text: 'Continue with Google',
-                icon: const Icon(Icons.g_mobiledata, size: 30, color: Colors.black87),
+                icon: const Icon(
+                  Icons.g_mobiledata,
+                  size: 30,
+                  color: Colors.black87,
+                ),
                 onPressed: () {},
               ),
               const SizedBox(height: 16),
@@ -259,7 +259,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 onPressed: () {},
               ),
               const SizedBox(height: 48),
-              
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

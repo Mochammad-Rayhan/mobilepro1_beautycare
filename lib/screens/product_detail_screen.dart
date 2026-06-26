@@ -3,8 +3,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import '../models/home_models.dart';
 import '../theme/app_colors.dart';
+<<<<<<< HEAD
 import '../services/cart_service.dart';
 import 'order_detail_screen.dart';
+=======
+>>>>>>> 8985c0d7e200dd4738632a81834fc6231659dc18
 
 class ProductDetailScreen extends StatelessWidget {
   final ProductModel product;
@@ -62,7 +65,11 @@ class ProductDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
+<<<<<<< HEAD
             _buildBottomBar(context),
+=======
+            _buildBottomBar(),
+>>>>>>> 8985c0d7e200dd4738632a81834fc6231659dc18
           ],
         ),
       ),
@@ -93,6 +100,7 @@ class ProductDetailScreen extends StatelessWidget {
               Icons.shopping_bag_outlined,
               color: Color(0xFF1A1A1A),
             ),
+<<<<<<< HEAD
             onPressed: () {
               Navigator.push(
                 context,
@@ -101,6 +109,9 @@ class ProductDetailScreen extends StatelessWidget {
                 ),
               );
             },
+=======
+            onPressed: () {},
+>>>>>>> 8985c0d7e200dd4738632a81834fc6231659dc18
           ),
         ],
       ),
@@ -276,7 +287,11 @@ class ProductDetailScreen extends StatelessWidget {
     );
   }
 
+<<<<<<< HEAD
   Widget _buildBottomBar(BuildContext context) {
+=======
+  Widget _buildBottomBar() {
+>>>>>>> 8985c0d7e200dd4738632a81834fc6231659dc18
     return Container(
       padding: const EdgeInsets.fromLTRB(20, 16, 20, 32),
       decoration: const BoxDecoration(
@@ -302,6 +317,7 @@ class ProductDetailScreen extends StatelessWidget {
             child: SizedBox(
               height: 50,
               child: ElevatedButton(
+<<<<<<< HEAD
                 onPressed: () {
                   CartService.instance.addToCart(product);
                   final navigator = Navigator.of(context);
@@ -322,6 +338,9 @@ class ProductDetailScreen extends StatelessWidget {
                     ),
                   );
                 },
+=======
+                onPressed: () {},
+>>>>>>> 8985c0d7e200dd4738632a81834fc6231659dc18
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: Colors.white,
