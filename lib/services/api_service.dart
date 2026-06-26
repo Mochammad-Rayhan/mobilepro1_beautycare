@@ -1,14 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-<<<<<<< HEAD
 import '../../models/home_models.dart';
 import '../../models/user_model.dart';
 import '../../models/cart_item.dart';
 import '../../models/order_history_model.dart';
-=======
-import '../../models/home_models.dart'; // Sesuaikan dengan path model Anda
-import '../../models/user_model.dart';
->>>>>>> 8985c0d7e200dd4738632a81834fc6231659dc18
 
 class ApiService {
   // IP khusus Emulator Android ke localhost laptop Anda
@@ -105,7 +100,6 @@ class ApiService {
       return -1;
     }
   }
-<<<<<<< HEAD
 
   // ── [API Checkout] ──
   Future<Map<String, dynamic>> checkoutOrder(
@@ -173,7 +167,9 @@ class ApiService {
         final dynamic data = json.decode(response.body);
         if (data is Map<String, dynamic> && data['data'] != null) {
           final List<dynamic> historyList = data['data'];
-          return historyList.map((json) => OrderHistory.fromJson(json)).toList();
+          return historyList
+              .map((json) => OrderHistory.fromJson(json))
+              .toList();
         } else if (data is List) {
           return data.map((json) => OrderHistory.fromJson(json)).toList();
         }
@@ -183,6 +179,4 @@ class ApiService {
       return [];
     }
   }
-=======
->>>>>>> 8985c0d7e200dd4738632a81834fc6231659dc18
 }
