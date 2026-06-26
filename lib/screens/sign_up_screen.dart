@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/primary_button.dart';
-import '../database/db_helper.dart';
+import '../services/api_service.dart';
 import '../models/user_model.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -47,8 +47,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       password: _passwordController.text,
     );
 
-    final dbHelper = DBHelper();
-    int result = await dbHelper.registerUser(user);
+    final apiService = ApiService();
+    int result = await apiService.registerUser(user);
 
     setState(() {
       _isLoading = false;

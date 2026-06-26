@@ -339,10 +339,7 @@ class _BeautyAIChatScreenState extends State<BeautyAIChatScreen>
       centerTitle: true,
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(1),
-        child: Container(
-          height: 1,
-          color: AppColors.border.withOpacity(0.5),
-        ),
+        child: Container(height: 1, color: AppColors.border.withOpacity(0.5)),
       ),
     );
   }
@@ -442,7 +439,11 @@ class _BeautyAIChatScreenState extends State<BeautyAIChatScreen>
               ),
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.auto_awesome, color: Colors.white, size: 14),
+            child: const Icon(
+              Icons.auto_awesome,
+              color: Colors.white,
+              size: 14,
+            ),
           ),
           const SizedBox(width: 10),
           Container(
@@ -534,8 +535,9 @@ class _BeautyAIChatScreenState extends State<BeautyAIChatScreen>
     return Padding(
       padding: const EdgeInsets.only(bottom: 14.0),
       child: Row(
-        mainAxisAlignment:
-            isMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+        mainAxisAlignment: isMe
+            ? MainAxisAlignment.end
+            : MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (!isMe) ...[
@@ -574,9 +576,7 @@ class _BeautyAIChatScreenState extends State<BeautyAIChatScreen>
                 color: isMe ? null : AppColors.surface,
                 border: isMe
                     ? null
-                    : Border.all(
-                        color: AppColors.border.withOpacity(0.5),
-                      ),
+                    : Border.all(color: AppColors.border.withOpacity(0.5)),
                 borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(20),
                   topRight: const Radius.circular(20),
@@ -692,14 +692,14 @@ class _BeautyAIChatScreenState extends State<BeautyAIChatScreen>
                       color: AppColors.primary.withOpacity(0.08),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
-                    )
+                    ),
                   ]
                 : [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.02),
                       blurRadius: 4,
                       offset: const Offset(0, 1),
-                    )
+                    ),
                   ],
           ),
           child: Row(
@@ -716,7 +716,10 @@ class _BeautyAIChatScreenState extends State<BeautyAIChatScreen>
                   ),
                   onPressed: _isLoading ? null : _pickImage,
                   splashRadius: 20,
-                  constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+                  constraints: const BoxConstraints(
+                    minWidth: 40,
+                    minHeight: 40,
+                  ),
                   padding: EdgeInsets.zero,
                 ),
               ),
@@ -781,7 +784,7 @@ class _BeautyAIChatScreenState extends State<BeautyAIChatScreen>
                               color: AppColors.primary.withOpacity(0.2),
                               blurRadius: 4,
                               offset: const Offset(0, 2),
-                            )
+                            ),
                           ]
                         : null,
                   ),
@@ -793,7 +796,9 @@ class _BeautyAIChatScreenState extends State<BeautyAIChatScreen>
                       child: Center(
                         child: Icon(
                           Icons.arrow_upward_rounded,
-                          color: canSend ? Colors.white : AppColors.textSecondary.withOpacity(0.5),
+                          color: canSend
+                              ? Colors.white
+                              : AppColors.textSecondary.withOpacity(0.5),
                           size: 20,
                         ),
                       ),

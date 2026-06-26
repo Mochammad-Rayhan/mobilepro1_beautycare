@@ -11,14 +11,32 @@ class ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.inputFill, // Slightly off-white background
+      backgroundColor: const Color(0xFFF8F9FA), // Clean, light grey background
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        centerTitle: false,
+        title: const Padding(
+          padding: EdgeInsets.only(left: 8.0),
+          child: Text(
+            'Profile',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF111111),
+              letterSpacing: -0.5,
+            ),
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             _buildHeader(context),
             const SizedBox(height: 24),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                 children: [
                   _buildOptionsGroup(
@@ -41,7 +59,7 @@ class ProfileTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 20),
                   _buildOptionsGroup(
                     context,
                     [
@@ -57,7 +75,7 @@ class ProfileTab extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 20),
                   _buildOptionsGroup(
                     context,
                     [
@@ -82,61 +100,56 @@ class ProfileTab extends StatelessWidget {
   Widget _buildHeader(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.only(top: 60, bottom: 30, left: 24, right: 24),
-      decoration: const BoxDecoration(
-        color: AppColors.primary,
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(30),
-          bottomRight: Radius.circular(30),
-        ),
-      ),
-      child: Column(
+      color: Colors.white, // Solid white background, no gradient
+      padding: const EdgeInsets.only(top: 16, bottom: 32, left: 24, right: 24),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Text(
-            'Profile',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
+          // Profile Image
+          Container(
+            width: 80,
+            height: 80,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: const Color(0xFFF5F5F5),
+              border: Border.all(color: const Color(0xFFEBEBEB), width: 1.5),
+            ),
+            child: const Center(
+              child: Icon(
+                Icons.person,
+                size: 40,
+                color: Color(0xFFCCCCCC),
+              ),
             ),
           ),
-          const SizedBox(height: 24),
-          Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.white, width: 4),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 10,
-                  offset: const Offset(0, 5),
+          const SizedBox(width: 20),
+          // User Info
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  user.name,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF111111),
+                    letterSpacing: -0.5,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  user.email,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Color(0xFF666666),
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
-            ),
-            child: const Icon(
-              Icons.person,
-              size: 50,
-              color: AppColors.primary,
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text(
-            user.name,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            user.email,
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.white.withOpacity(0.8),
             ),
           ),
         ],
@@ -149,13 +162,7 @@ class ProfileTab extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
+        border: Border.all(color: const Color(0xFFEAEAEA), width: 1), // Clean border
       ),
       child: Column(
         children: options.asMap().entries.map((entry) {
@@ -173,12 +180,13 @@ class ProfileTab extends StatelessWidget {
                 isDestructive: option.isDestructive,
               ),
               if (!isLast)
-                const Divider(
-                  height: 1,
-                  thickness: 1,
-                  indent: 60,
-                  endIndent: 16,
-                  color: AppColors.inputFill,
+                const Padding(
+                  padding: EdgeInsets.only(left: 60, right: 16),
+                  child: Divider(
+                    height: 1,
+                    thickness: 1,
+                    color: Color(0xFFF2F2F2),
+                  ),
                 ),
             ],
           );
@@ -194,7 +202,14 @@ class ProfileTab extends StatelessWidget {
     required VoidCallback onTap,
     bool isDestructive = false,
   }) {
-    final color = isDestructive ? AppColors.error : AppColors.textPrimary;
+    final textColor = isDestructive ? const Color(0xFFD32F2F) : const Color(0xFF111111);
+    final iconBgColor = isDestructive 
+        ? const Color(0xFFFFF0F0) 
+        : const Color(0xFFFDF1F3); // Very soft solid pink
+    final iconColor = isDestructive 
+        ? const Color(0xFFD32F2F) 
+        : const Color(0xFFC98A8E); // Soft rose color for icon
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -207,14 +222,12 @@ class ProfileTab extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: isDestructive
-                      ? AppColors.error.withOpacity(0.1)
-                      : AppColors.primary.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12),
+                  color: iconBgColor,
+                  borderRadius: BorderRadius.circular(10), // Squircle feel
                 ),
                 child: Icon(
                   icon,
-                  color: isDestructive ? AppColors.error : AppColors.primary,
+                  color: iconColor,
                   size: 22,
                 ),
               ),
@@ -223,17 +236,18 @@ class ProfileTab extends StatelessWidget {
                 child: Text(
                   title,
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 15,
                     fontWeight: FontWeight.w600,
-                    color: color,
+                    color: textColor,
+                    letterSpacing: -0.3,
                   ),
                 ),
               ),
               if (!isDestructive)
                 const Icon(
                   Icons.arrow_forward_ios_rounded,
-                  size: 16,
-                  color: AppColors.textSecondary,
+                  size: 14,
+                  color: Color(0xFFCCCCCC),
                 ),
             ],
           ),
@@ -258,36 +272,29 @@ class ProfileTab extends StatelessWidget {
               color: Colors.white,
               shape: BoxShape.rectangle,
               borderRadius: BorderRadius.circular(24),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 10.0,
-                  offset: Offset(0.0, 10.0),
-                ),
-              ],
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
                   padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: AppColors.error.withOpacity(0.1),
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFFFF0F0),
                     shape: BoxShape.circle,
                   ),
                   child: const Icon(
                     Icons.logout_rounded,
-                    color: AppColors.error,
-                    size: 40,
+                    color: Color(0xFFD32F2F),
+                    size: 32,
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 20),
                 const Text(
                   'Logout',
                   style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
+                    color: Color(0xFF111111),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -295,21 +302,21 @@ class ProfileTab extends StatelessWidget {
                   'Are you sure you want to logout from your account?',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 15,
-                    color: AppColors.textSecondary,
+                    fontSize: 14,
+                    color: Color(0xFF666666),
+                    height: 1.5,
                   ),
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: 28),
                 Row(
                   children: [
                     Expanded(
-                      child: OutlinedButton(
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: AppColors.textPrimary,
-                          side: const BorderSide(color: AppColors.border),
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          foregroundColor: const Color(0xFF111111),
+                          padding: const EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         ),
                         onPressed: () {
@@ -318,21 +325,21 @@ class ProfileTab extends StatelessWidget {
                         child: const Text(
                           'Cancel',
                           style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    const SizedBox(width: 12),
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.error,
+                          backgroundColor: const Color(0xFFD32F2F),
                           foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          padding: const EdgeInsets.symmetric(vertical: 14),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16),
+                            borderRadius: BorderRadius.circular(12),
                           ),
                           elevation: 0,
                         ),
@@ -346,8 +353,8 @@ class ProfileTab extends StatelessWidget {
                         child: const Text(
                           'Logout',
                           style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),

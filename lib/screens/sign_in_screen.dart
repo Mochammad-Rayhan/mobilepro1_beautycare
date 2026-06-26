@@ -5,7 +5,8 @@ import '../widgets/primary_button.dart';
 import '../widgets/social_login_button.dart';
 import 'sign_up_screen.dart';
 import 'dashboard_screen.dart';
-import '../database/db_helper.dart';
+import '../services/api_service.dart';
+import '../services/auth_service.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -33,8 +34,8 @@ class _SignInScreenState extends State<SignInScreen> {
       _isLoading = true;
     });
 
-    final dbHelper = DBHelper();
-    final user = await dbHelper.loginUser(
+    final apiService = ApiService();
+    final user = await apiService.loginUser(
       _emailController.text,
       _passwordController.text,
     );
@@ -44,6 +45,7 @@ class _SignInScreenState extends State<SignInScreen> {
     });
 
     if (user != null) {
+      AuthService.instance.currentUser = user;
       if (mounted) {
         Navigator.pushReplacement(
           context,
